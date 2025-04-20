@@ -1,6 +1,38 @@
 # Snakes and Ladders Game
 
-Welcome to the Snakes and Ladders game! This is a simple web-based implementation of the classic board game.
+A classic Snakes and Ladders board game implemented using HTML, CSS, and JavaScript.
+
+## Play Now!
+
+[![Play Game](https://img.shields.io/badge/Play-Snakes%20and%20Ladders-brightgreen?style=for-the-badge)](https://yourusername.github.io/vibe-coding-game/snakes-and-ladders/src/)
+
+## Features
+
+- Interactive game board with snakes and ladders visualization
+- Two-player turn-based gameplay
+- Dice rolling mechanism
+- Move history tracking
+- Player position indicators
+- Automatic snake and ladder movement
+
+## How to Play
+
+1. Click the "Roll Dice" button to take your turn
+2. Players alternate turns
+3. Land on a ladder to climb up
+4. Land on a snake head to slide down
+5. First player to reach position 100 wins!
+
+## Development
+
+To run this game locally:
+
+```bash
+git clone https://github.com/yourusername/vibe-coding-game.git
+cd vibe-coding-game/snakes-and-ladders/src
+```
+
+Then open `index.html` in your browser.
 
 ## Project Structure
 
@@ -19,31 +51,6 @@ snakes-and-ladders
 ├── package.json          # npm configuration file
 └── README.md             # Project documentation
 ```
-
-## How to Play
-
-1. Open the `index.html` file in your web browser.
-2. Click the "Roll Dice" button to move your player.
-3. Navigate the board, climbing ladders and avoiding snakes.
-4. The first player to reach the last square wins!
-
-## Setup Instructions
-
-To set up the project locally, follow these steps:
-
-1. Clone the repository:
-   ```
-   git clone <repository-url>
-   ```
-2. Navigate to the project directory:
-   ```
-   cd snakes-and-ladders
-   ```
-3. Install dependencies (if any) using npm:
-   ```
-   npm install
-   ```
-4. Open `src/index.html` in your web browser to start playing!
 
 ## Contributing
 
