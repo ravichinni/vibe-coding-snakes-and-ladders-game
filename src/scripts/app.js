@@ -92,17 +92,17 @@ function updateUI() {
     }
 
     if (playerPositionDisplay) {
-        playerPositionDisplay.innerHTML = `Player Positions: ${players.map(player => 
-            `<div class="player-info">
-                <span class="player-indicator ${player.name.toLowerCase()}-color"></span>
-                ${player.name}: ${player.position}
-            </div>`
-        ).join("")}`;
+        playerPositionDisplay.innerHTML = `
+            <h3>Player Positions</h3>
+            ${players.map(player => `
+                <div class="position-info ${player.name.toLowerCase()}">
+                    <span class="player-indicator ${player.name.toLowerCase()}-color"></span>
+                    <span>${player.name}</span>
+                    <span class="position-number">Position: ${player.position}</span>
+                </div>
+            `).join("")}
+        `;
     }
-    // if (playerPositionDisplay) {
-    //     playerPositionDisplay.textContent = `Player Positions: ${players.map(player => 
-    //         `${player.name}: ${player.position}`).join(", ")}`;
-    // }
     
     // Update player positions on board
     const cells = gameBoard.querySelectorAll('div');

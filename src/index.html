@@ -4,19 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snakes and Ladders</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-    <h1>Snakes and Ladders</h1>
+    <h1>Snakes & Ladders</h1>
     <div class="game-container">
-        <svg id="snakes-and-ladders" width="500" height="500"></svg>
+        <svg id="snakes-and-ladders" width="100%" height="100%" viewBox="0 0 500 500" preserveAspectRatio="xMidYMid meet"></svg>
         <div id="game-board"></div>
     </div>
     <div id="controls">
         <button id="roll-dice">Roll Dice</button>
-        <p id="dice-result">Dice: -</p>
-        <p id="player-turn">Player 1's Turn</p>
-        <p id="player-position">Player Positions: </p>
+        <div id="dice-result">Dice: -</div>
+        <div id="player-turn">Player 1's Turn</div>
+        <div id="player-position">Player Positions: </div>
     </div>
     <div id="game-history"></div>
     <script src="scripts/gameLogic.js"></script>

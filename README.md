@@ -8,12 +8,24 @@ A classic Snakes and Ladders board game implemented using HTML, CSS, and JavaScr
 
 ## Features
 
-- Interactive game board with snakes and ladders visualization
-- Two-player turn-based gameplay
-- Dice rolling mechanism
-- Move history tracking
-- Player position indicators
-- Automatic snake and ladder movement
+- Modern, responsive design that works on both desktop and mobile devices
+- Interactive game board with animated snakes and ladders visualization
+- Two-player turn-based gameplay with distinct player colors:
+  - Player 1: Terracotta gradient
+  - Player 2: Sage to navy gradient
+- Visual dice rolling mechanism
+- Detailed move history tracking with turn-by-turn breakdown
+- Real-time player position indicators with color-coded markers
+- Automatic snake and ladder movement with visual feedback
+- Clean, modern UI with:
+  - Gradient backgrounds
+  - Smooth animations and transitions
+  - Shadow effects for depth
+  - Responsive layout that adapts to screen size
+- Accessibility features including:
+  - High contrast colors
+  - Readable font (Poppins)
+  - Clear visual hierarchy
 
 ## How to Play
 
