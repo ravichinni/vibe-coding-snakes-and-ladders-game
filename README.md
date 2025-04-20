@@ -4,7 +4,7 @@ A classic Snakes and Ladders board game implemented using HTML, CSS, and JavaScr
 
 ## Play Now!
 
-[![Play Game](https://img.shields.io/badge/Play-Snakes%20and%20Ladders-brightgreen?style=for-the-badge)](https://ravichinni.github.io/vibe-coding-game/snakes-and-ladders/src/)
+[![Play Game](https://img.shields.io/badge/Play-Snakes%20and%20Ladders-brightgreen?style=for-the-badge)](https://ravichinni.github.io/vibe-coding-snakes-and-ladders-game/src/)
 
 ## Features
 
@@ -28,7 +28,7 @@ A classic Snakes and Ladders board game implemented using HTML, CSS, and JavaScr
 To run this game locally:
 
 ```bash
-git clone https://github.com/ravichinni/vibe-coding-game.git
+git clone https://github.com/ravichinni/vibe-coding-snakes-and-ladders-game.git
 cd vibe-coding-game/snakes-and-ladders/src
 ```
 
