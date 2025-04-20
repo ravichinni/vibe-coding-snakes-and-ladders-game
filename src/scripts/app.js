@@ -1,45 +1,121 @@
-const gameBoard = document.getElementById('game-board');
-const rollButton = document.getElementById('roll-button');
+// DOM elements
+const gameBoard = document.getElementById("game-board");
+const rollDiceButton = document.getElementById("roll-dice");
+const diceResult = document.getElementById("dice-result");
+const playerTurn = document.getElementById("player-turn");
 const playerPositionDisplay = document.getElementById('player-position');
-let playerPosition = 0;
 
-function initializeGame() {
-    playerPosition = 0;
-    updatePlayerPosition();
-}
+// Game state
+let lastDiceRoll = '-';
 
-function rollDice() {
-    return Math.floor(Math.random() * 6) + 1;
-}
-
-function movePlayer(steps) {
-    playerPosition += steps;
-    checkForSnakesAndLadders();
-    updatePlayerPosition();
-}
-
-function checkForSnakesAndLadders() {
-    const snakes = { 16: 6, 47: 26, 49: 11, 56: 53, 62: 19, 64: 60, 87: 24, 93: 73, 95: 75, 98: 78 };
-    const ladders = { 1: 38, 4: 14, 9: 31, 21: 42, 28: 84, 36: 44, 51: 67, 71: 91, 80: 100 };
-
-    if (snakes[playerPosition]) {
-        playerPosition = snakes[playerPosition];
-    } else if (ladders[playerPosition]) {
-        playerPosition = ladders[playerPosition];
+// Initialize game board
+function createBoard() {
+    for (let i = 100; i > 0; i--) {
+        const cell = document.createElement("div");
+        cell.textContent = i;
+        cell.style.backgroundColor = i % 2 === 0 ? "#f0f0f0" : "#d0d0d0";
+        cell.setAttribute('data-position', i);
+        gameBoard.appendChild(cell);
     }
 }
 
-function updatePlayerPosition() {
-    playerPositionDisplay.textContent = `Player Position: ${playerPosition}`;
-    if (playerPosition >= 100) {
-        alert('Congratulations! You reached the end!');
-        initializeGame();
+function drawSnakesAndLadders() {
+    const svg = document.getElementById('snakes-and-ladders');
+    const cellSize = 50;
+
+    // Helper function to get cell center coordinates
+    function getCellCenter(position) {
+        const row = 9 - Math.floor((position - 1) / 10);
+        const col = ((position - 1) % 10);
+        return {
+            x: col * cellSize + cellSize / 2,
+            y: row * cellSize + cellSize / 2
+        };
     }
+
+    // Draw Snakes
+    Object.entries(snakes).forEach(([start, end]) => {
+        const startPos = getCellCenter(parseInt(start));
+        const endPos = getCellCenter(end);
+        
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        const controlPoint1 = {
+            x: startPos.x + (endPos.x - startPos.x) / 3,
+            y: startPos.y + (endPos.y - startPos.y) / 2
+        };
+        const controlPoint2 = {
+            x: startPos.x + 2 * (endPos.x - startPos.x) / 3,
+            y: startPos.y + (endPos.y - startPos.y) / 2
+        };
+        
+        path.setAttribute("d", `M ${startPos.x} ${startPos.y} 
+                              C ${controlPoint1.x} ${controlPoint1.y},
+                                ${controlPoint2.x} ${controlPoint2.y},
+                                ${endPos.x} ${endPos.y}`);
+        path.classList.add('snake');
+        svg.appendChild(path);
+    });
+
+    // Draw Ladders
+    Object.entries(ladders).forEach(([start, end]) => {
+        const startPos = getCellCenter(parseInt(start));
+        const endPos = getCellCenter(end);
+        
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", startPos.x);
+        line.setAttribute("y1", startPos.y);
+        line.setAttribute("x2", endPos.x);
+        line.setAttribute("y2", endPos.y);
+        line.classList.add('ladder');
+        svg.appendChild(line);
+    });
 }
 
-rollButton.addEventListener('click', () => {
+// Update UI
+function updateUI() {
+    if (diceResult) diceResult.textContent = `Dice: ${lastDiceRoll}`;
+    if (playerTurn) playerTurn.textContent = `${players[currentPlayerIndex].name}'s Turn`;
+    if (playerPositionDisplay) {
+        playerPositionDisplay.textContent = `Player Positions: ${players.map(player => 
+            `${player.name}: ${player.position}`).join(", ")}`;
+    }
+    
+    // Update player positions on board
+    const cells = gameBoard.querySelectorAll('div');
+    cells.forEach(cell => {
+        cell.classList.remove('player1', 'player2');
+    });
+    
+    players.forEach((player, index) => {
+        if (player.position > 0) {
+            const cell = gameBoard.querySelector(`[data-position="${player.position}"]`);
+            if (cell) {
+                cell.classList.add(`player${index + 1}`);
+            }
+        }
+    });
+}
+
+// Handle dice roll
+rollDiceButton.addEventListener("click", () => {
     const diceRoll = rollDice();
-    movePlayer(diceRoll);
+    lastDiceRoll = diceRoll;
+    diceResult.textContent = `Dice: ${diceRoll}`;
+
+    const currentPlayer = players[currentPlayerIndex];
+    movePlayer(currentPlayer, diceRoll);
+
+    if (checkWinner(currentPlayer)) {
+        alert(`${currentPlayer.name} wins!`);
+        rollDiceButton.disabled = true;
+        return;
+    }
+
+    currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+    updateUI();
 });
 
-initializeGame();
+// Start the game
+createBoard();
+drawSnakesAndLadders();
+updateUI();
