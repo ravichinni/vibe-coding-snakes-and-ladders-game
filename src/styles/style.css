@@ -99,3 +99,49 @@ button {
     0%, 100% { stroke-dashoffset: 0; }
     50% { stroke-dashoffset: 10; }
 }
+
+#game-history {
+    margin: 20px auto;
+    max-width: 500px;
+    text-align: left;
+}
+
+.player-history {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.player-history h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.player-indicator {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.player1-color {
+    background-color: red;
+}
+
+.player2-color {
+    background-color: blue;
+}
+
+.player-info {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.player-history h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}

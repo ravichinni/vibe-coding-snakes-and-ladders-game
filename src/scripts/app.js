@@ -25,11 +25,20 @@ function drawSnakesAndLadders() {
 
     // Helper function to get cell center coordinates
     function getCellCenter(position) {
-        const row = 9 - Math.floor((position - 1) / 10);
-        const col = ((position - 1) % 10);
+        // Calculate row (0-9 from bottom to top)
+        const row = Math.floor((position - 1) / 10);
+        const rowFromBottom = 9 - row;  // Invert row number since we display from bottom to top
+        
+        // Calculate column based on row direction
+        // For even rows from bottom, numbers go left to right
+        // For odd rows from bottom, numbers go right to left
+        const isEvenRowFromBottom = rowFromBottom % 2 === 0;
+        const col = position % 10 || 10;  // Convert 10, 20, 30, etc to position 10
+        const adjustedCol = isEvenRowFromBottom ? (col - 1) : (10 - col);
+        
         return {
-            x: col * cellSize + cellSize / 2,
-            y: row * cellSize + cellSize / 2
+            x: adjustedCol * cellSize + cellSize / 2,
+            y: rowFromBottom * cellSize + cellSize / 2
         };
     }
 
@@ -74,11 +83,26 @@ function drawSnakesAndLadders() {
 // Update UI
 function updateUI() {
     if (diceResult) diceResult.textContent = `Dice: ${lastDiceRoll}`;
-    if (playerTurn) playerTurn.textContent = `${players[currentPlayerIndex].name}'s Turn`;
-    if (playerPositionDisplay) {
-        playerPositionDisplay.textContent = `Player Positions: ${players.map(player => 
-            `${player.name}: ${player.position}`).join(", ")}`;
+    if (playerTurn) {
+        playerTurn.innerHTML = `
+            <div class="player-info">
+                <span class="player-indicator ${players[currentPlayerIndex].name.toLowerCase()}-color"></span>
+                ${players[currentPlayerIndex].name}'s Turn
+            </div>`;
     }
+
+    if (playerPositionDisplay) {
+        playerPositionDisplay.innerHTML = `Player Positions: ${players.map(player => 
+            `<div class="player-info">
+                <span class="player-indicator ${player.name.toLowerCase()}-color"></span>
+                ${player.name}: ${player.position}
+            </div>`
+        ).join("")}`;
+    }
+    // if (playerPositionDisplay) {
+    //     playerPositionDisplay.textContent = `Player Positions: ${players.map(player => 
+    //         `${player.name}: ${player.position}`).join(", ")}`;
+    // }
     
     // Update player positions on board
     const cells = gameBoard.querySelectorAll('div');
@@ -95,6 +119,24 @@ function updateUI() {
         }
     });
 }
+
+function displayHistory() {
+    const historyDiv = document.getElementById('game-history');
+    if (!historyDiv) return;
+
+    historyDiv.innerHTML = players.map(player => {
+        const moves = player.history.map(move => 
+            `Turn ${move.turnNumber}: Roll ${move.diceRoll} - ` +
+            `From ${move.startPosition} to ${move.endPosition}`
+        ).join('<br>');
+        
+        return `<div class="player-history">
+            <h3>${player.name} History:</h3>
+            ${moves || 'No moves yet'}
+        </div>`;
+    }).join('');
+}
+
 
 // Handle dice roll
 rollDiceButton.addEventListener("click", () => {
@@ -113,9 +155,11 @@ rollDiceButton.addEventListener("click", () => {
 
     currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
     updateUI();
+    displayHistory();
 });
 
 // Start the game
 createBoard();
 drawSnakesAndLadders();
 updateUI();
+displayHistory();
